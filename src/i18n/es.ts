@@ -22,6 +22,11 @@ export const es: Dict = {
     whatsNew: 'Novedades',
     footerLicense: 'Código abierto (MIT) · sin rastreo',
     language: 'Idioma',
+    themeDark: 'Oscuro',
+    themeLight: 'Claro',
+    themeSystem: 'Sistema',
+    themeButton: (current: string, next: string) =>
+      `Tema: ${current}. Pulsa para cambiar a ${next}.`,
   },
   welcome: {
     tagline:

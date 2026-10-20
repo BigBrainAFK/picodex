@@ -157,6 +157,53 @@ export function IconCheckCircle(props: IconProps) {
   );
 }
 
+/*
+ * The theme icons are a sun drawn as an eight-point badge. Unlike the line
+ * icons above, light and system fill the badge and cut their detail out of it
+ * (even-odd fill), which stays legible at footer size; dark is the badge in
+ * outline, a sun switched off.
+ */
+const SUN_BADGE_FILLED = 'M12 1l3 3h5v5l3 3-3 3v5h-5l-3 3-3-3H4v-5l-3-3 3-3V4h5z';
+const SUN_BADGE_OUTLINE = 'M12 2l3 3h4v4l3 3-3 3v4h-4l-3 3-3-3H5v-4l-3-3 3-3V5h4z';
+
+/** Light theme: a filled sun with the right half of its disc cut out. */
+export function IconThemeLight(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <path
+        d={`${SUN_BADGE_FILLED}M12 7a5 5 0 0 1 0 10z`}
+        fill="currentColor"
+        fillRule="evenodd"
+        stroke="none"
+      />
+    </Icon>
+  );
+}
+
+/** Dark theme: the sun in outline, with an empty disc. */
+export function IconThemeDark(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <path d={SUN_BADGE_OUTLINE} />
+      <circle cx="12" cy="12" r="4" />
+    </Icon>
+  );
+}
+
+/** System theme: a filled sun with an A cut out, for automatic. */
+export function IconThemeSystem(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <path
+        d={`${SUN_BADGE_FILLED}M10.9 6.75h2.2l3.6 10.25h-2.1l-.8-2.4h-3.6l-.8 2.4H7.3zM12 9.4L10.75 13h2.5z`}
+        fill="currentColor"
+        fillRule="evenodd"
+        stroke="none"
+      />
+    </Icon>
+  );
+}
+
 /** Launches: a play triangle. */
 export function IconPlay(props: IconProps) {
   return (

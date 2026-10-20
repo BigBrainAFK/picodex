@@ -2,6 +2,7 @@ import { useRef, useState, type ComponentType } from 'react';
 import { ProgressBar } from './components/ProgressBar';
 import { isFileSystemAccessSupported } from './lib/sdcard';
 import { SdProvider, useSd } from './state/SdContext';
+import { useTheme } from './state/theme';
 import { LANGUAGES, LanguageProvider, useLang, useT, type Lang } from './i18n';
 import { resolveSdMessage } from './i18n/messages';
 import type { Dict } from './i18n/en';
@@ -21,7 +22,12 @@ import {
   IconLink,
   IconScreens,
   IconPulse,
+  IconThemeDark,
+  IconThemeLight,
+  IconThemeSystem,
+  type IconProps,
 } from './components/icons';
+import { nextThemePick, type ThemePick } from './lib/theme';
 import './App.css';
 
 type Tab = 'library' | 'covers' | 'stats' | 'associations' | 'screenshots' | 'health';
@@ -244,9 +250,7 @@ function LanguageToggle() {
     <button
       key={value}
       type="button"
-      className={
-        lang === value ? 'app__footer-link app__lang--active' : 'app__footer-link app__lang'
-      }
+      className={lang === value ? 'app__footer-link app__footer-link--active' : 'app__footer-link'}
       aria-pressed={lang === value}
       onClick={() => setLang(value)}
     >
@@ -257,6 +261,41 @@ function LanguageToggle() {
     <span className="app__lang-toggle" role="group" aria-label={t.app.language}>
       {LANGUAGES.map(({ code, label }) => option(code, label))}
     </span>
+  );
+}
+
+const THEME_ICONS: Record<ThemePick, ComponentType<IconProps>> = {
+  dark: IconThemeDark,
+  light: IconThemeLight,
+  system: IconThemeSystem,
+};
+
+/**
+ * The theme button in the footer, next to the language switch: one icon that
+ * shows the current pick, and each click moves to the next one (dark, light,
+ * system). Its label and tooltip say both, since an icon alone does not.
+ */
+function ThemeToggle() {
+  const [pick, setPick] = useTheme();
+  const t = useT();
+  const names: Record<ThemePick, string> = {
+    dark: t.app.themeDark,
+    light: t.app.themeLight,
+    system: t.app.themeSystem,
+  };
+  const next = nextThemePick(pick);
+  const label = t.app.themeButton(names[pick], names[next]);
+  const Icon = THEME_ICONS[pick];
+  return (
+    <button
+      type="button"
+      className="app__footer-link app__theme-button"
+      aria-label={label}
+      title={label}
+      onClick={() => setPick(next)}
+    >
+      <Icon className="app__theme-icon" />
+    </button>
   );
 }
 
@@ -276,18 +315,30 @@ function Shell() {
       ) : (
         <Welcome onWhatsNew={() => setShowChangelog(true)} />
       )}
+      {/* three groups, each kept on one line; on narrow screens each group takes
+          its own line and the separators between groups hide (see App.css) */}
       <footer className="app__footer">
-        <a href="https://github.com/rasalopa/picodex" target="_blank" rel="noreferrer">
-          GitHub
-        </a>
-        <span aria-hidden="true">·</span>
-        <button type="button" className="app__footer-link" onClick={() => setShowChangelog(true)}>
-          {t.app.whatsNew}
-        </button>
-        <span aria-hidden="true">·</span>
-        <span>{t.app.footerLicense}</span>
-        <span aria-hidden="true">·</span>
-        <LanguageToggle />
+        <span className="app__footer-group">
+          <a href="https://github.com/rasalopa/picodex" target="_blank" rel="noreferrer">
+            GitHub
+          </a>
+          <span aria-hidden="true">·</span>
+          <button type="button" className="app__footer-link" onClick={() => setShowChangelog(true)}>
+            {t.app.whatsNew}
+          </button>
+        </span>
+        <span className="app__footer-sep" aria-hidden="true">
+          ·
+        </span>
+        <span className="app__footer-group">{t.app.footerLicense}</span>
+        <span className="app__footer-sep" aria-hidden="true">
+          ·
+        </span>
+        <span className="app__footer-group">
+          <LanguageToggle />
+          <span aria-hidden="true">·</span>
+          <ThemeToggle />
+        </span>
       </footer>
       {showChangelog && <Changelog onClose={() => setShowChangelog(false)} />}
     </div>

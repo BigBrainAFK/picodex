@@ -32,6 +32,12 @@ export const en = {
     whatsNew: "What's new",
     footerLicense: 'Open source (MIT) · no tracking',
     language: 'Language',
+    themeDark: 'Dark',
+    themeLight: 'Light',
+    themeSystem: 'System',
+    /** Label and tooltip of the footer theme button: the pick now, then what a click picks. */
+    themeButton: (current: string, next: string) =>
+      `Theme: ${current}. Click to switch to ${next}.`,
   },
   welcome: {
     tagline:

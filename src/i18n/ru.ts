@@ -20,6 +20,11 @@ export const ru = {
     whatsNew: 'Что нового',
     footerLicense: 'Лицензия MIT · без телеметрии',
     language: 'Язык',
+    themeDark: 'Тёмная',
+    themeLight: 'Светлая',
+    themeSystem: 'Системная',
+    themeButton: (current: string, next: string) =>
+      `Тема: ${current}. Нажмите, чтобы выбрать «${next}».`,
   },
 
   welcome: {

@@ -287,11 +287,35 @@
 
 .app__footer {
   display: flex;
-  gap: 0.5rem;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.5rem;
   justify-content: center;
   padding: 1rem 0 1.5rem;
   color: var(--text-dim);
   font-size: 0.78rem;
+}
+
+/* a group keeps its items on one line, so a line break can only fall between
+   groups */
+.app__footer-group {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  white-space: nowrap;
+}
+
+/* below the width where the whole footer fits on one line (about 37rem in
+   Russian), each group gets its own centered line and the dots between groups
+   go, so no line starts or ends on a separator */
+@media (max-width: 40rem) {
+  .app__footer {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .app__footer-sep {
+    display: none;
+  }
 }
 
 .app__footer a {
@@ -337,10 +361,33 @@
   gap: 0.35rem;
 }
 
-/* The inactive language looks like the other footer links; the active one
-   reads as the current state, not as something begging to be clicked. */
-.app__lang--active {
+/* the theme button: its padding gives the icon a 24px target, and the negative
+   margin keeps the footer line as tall as its text */
+.app__theme-button {
+  display: inline-flex;
+  align-self: center;
+  padding: 0.25rem;
+  margin: -0.25rem 0;
+  border-radius: 999px;
+  transition: color 0.15s ease;
+}
+
+.app__theme-icon {
+  width: 1.5em;
+  height: 1.5em;
+}
+
+/* In the language switch the inactive options look like the other footer
+   links; the active one reads as the current state, not as something begging
+   to be clicked. */
+.app__footer-link--active {
   color: var(--accent-text);
   font-weight: 600;
   cursor: default;
+}
+
+/* the current pick does not react to hover: clicking it changes nothing */
+.app__footer-link--active:hover:not(:disabled) {
+  color: var(--accent-text);
+  text-decoration: none;
 }

@@ -23,8 +23,10 @@ quiet, color means something. Tokens live in `src/index.css`.
 
 ## Themes
 
-Dark is the default and the identity; a light theme is one click away in the footer. Both are the
-same tokens: `:root` holds the dark values and `:root[data-theme='light']` overrides them.
+Dark is the default and the identity. The theme button in the footer cycles dark, light and system,
+which follows the operating system; `src/lib/theme.ts` holds the rule, and the script in
+`index.html` applies a stored pick before the first paint. Both themes are the same tokens: `:root`
+holds the dark values and `:root[data-theme='light']` overrides them.
 
 - Every color token has a value in both themes, or is the same in both on purpose: `--well`,
   `--on-accent` and the brand `--accent`.

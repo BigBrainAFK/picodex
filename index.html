@@ -9,6 +9,20 @@
       name="description"
       content="Manage your Pico Launcher SD card from the browser, on the DSpico or any flashcart that runs it: covers, library, favorites and play stats. Nothing to install, and your files stay on your computer."
     />
+    <script>
+      // Dark is the default. A pick stored by the footer theme button is applied here, before
+      // the stylesheet paints anything, so a light page does not flash dark. 'system' follows
+      // the operating system. Same rule as showsLight in src/lib/theme.ts (its test runs this).
+      try {
+        const pick = localStorage.getItem('picodex-theme');
+        const prefersLight = matchMedia('(prefers-color-scheme: light)').matches;
+        if (pick === 'light' || (pick === 'system' && prefersLight)) {
+          document.documentElement.dataset.theme = 'light';
+        }
+      } catch {
+        // storage can be blocked; the page then opens in the default dark theme
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>

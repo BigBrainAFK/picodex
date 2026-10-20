@@ -62,6 +62,9 @@ npm run dev
 
 Open the printed URL, click **Open SD card**, and pick your mounted SD.
 
+PicoDex opens in its dark theme. The button next to the language in the footer switches it to
+light, or lets it follow your system.
+
 ## Development
 
 ```bash
