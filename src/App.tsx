@@ -210,7 +210,7 @@ function Workspace() {
           <span className="app__sd-dot" aria-hidden="true" />
           {root?.name}
         </span>
-        <button onClick={() => void refresh()} disabled={loading}>
+        <button className="app__reload" onClick={() => void refresh()} disabled={loading}>
           {loading ? t.app.reloading : t.app.reload}
         </button>
       </nav>

@@ -257,6 +257,26 @@
   flex: none;
 }
 
+/* Reload sits with the card name it acts on: a quiet hairline pill at the
+   name's size, so it no longer outweighs the tabs next to it */
+.app__reload {
+  padding: 0.3rem 0.8rem;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-dim);
+  font-size: 0.875rem;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease,
+    transform 0.05s ease;
+}
+
+.app__reload:hover:not(:disabled) {
+  background: var(--bg-raised);
+  color: var(--text);
+}
+
 .app__content {
   flex: 1;
   padding: 1.5rem 0 3rem;
