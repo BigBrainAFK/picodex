@@ -281,9 +281,25 @@
   opacity: 1;
 }
 
+/* While disabled the toggles keep their resting look; these rules outrank the
+   global button:disabled dim, which would fade every filled heart to half */
 .system-gallery__favorite:disabled,
 .system-gallery__completed:disabled {
   cursor: default;
+  opacity: 0.45;
+}
+
+.system-gallery__favorite--on:disabled,
+.system-gallery__completed--on:disabled {
+  opacity: 1;
+}
+
+/* Dim the toggles only while this card's cover is still resolving. A write in
+   flight on another card disables them too (one gamedata.json write at a
+   time), but dimming for that faded every heart in the grid out and back on
+   each click. The :has() selector also outranks the hover and --on rules. */
+.system-gallery__cover-wrap:has(> .system-gallery__cover--skeleton) .system-gallery__favorite,
+.system-gallery__cover-wrap:has(> .system-gallery__cover--skeleton) .system-gallery__completed {
   opacity: 0.3;
 }
 
