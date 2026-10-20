@@ -2,10 +2,8 @@
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
+  /* same edge as every other view (see .library-view) */
   width: 100%;
-  max-width: 1080px;
-  margin: 0 auto;
-  padding: 1.5rem;
 }
 
 /* header */

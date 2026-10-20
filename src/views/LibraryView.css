@@ -2,10 +2,9 @@
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
+  /* no padding or centering of its own: every view starts at the .app column
+     edge, right under the tab bar, so switching tabs does not shift content */
   width: 100%;
-  max-width: 1080px;
-  margin: 0 auto;
-  padding: 1.5rem;
 }
 
 /* summary strip: a row of stat tiles (each tile also carries .card) */

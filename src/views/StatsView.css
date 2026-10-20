@@ -1,8 +1,8 @@
 .stats-view {
+  /* left-aligned like Health and Associations, no padding of its own (see
+     .library-view) */
   width: 100%;
   max-width: 56rem;
-  margin: 0 auto;
-  padding: 1.5rem;
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
