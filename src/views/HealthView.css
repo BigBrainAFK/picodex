@@ -107,8 +107,8 @@
   cursor: pointer;
 }
 
+/* the raspberry tick comes from the global accent-color in index.css */
 .health-view__check input[type='checkbox'] {
-  accent-color: var(--accent);
   cursor: pointer;
 }
 

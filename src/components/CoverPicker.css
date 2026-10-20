@@ -380,6 +380,13 @@
   font-size: 0.92rem;
 }
 
+/* the file input takes the free width of the row, so its "no file chosen" text
+   and a chosen file name are not clipped next to the padded button */
+.cover-picker__file-label input[type='file'] {
+  flex: 1 1 16rem;
+  min-width: 0;
+}
+
 .cover-picker__hint {
   margin: 0;
   font-size: 0.82rem;
