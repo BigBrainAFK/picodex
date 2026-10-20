@@ -60,6 +60,13 @@ h3 {
   line-height: 1.2;
   margin: 0 0 0.5rem;
   letter-spacing: -0.01em;
+  /* a title that wraps splits into lines of similar length */
+  text-wrap: balance;
+}
+
+/* paragraphs do not end on a lone word */
+p {
+  text-wrap: pretty;
 }
 
 a {

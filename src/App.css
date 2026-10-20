@@ -62,6 +62,8 @@
   color: var(--text-dim);
   margin: 0;
   font-size: 1.05rem;
+  /* centered under the hero: two lines of similar length read better */
+  text-wrap: balance;
 }
 
 .app__cta {
@@ -138,6 +140,7 @@
   color: var(--text-dim);
   font-size: 0.875rem;
   line-height: 1.45;
+  text-wrap: pretty;
 }
 
 .app__feature-title {

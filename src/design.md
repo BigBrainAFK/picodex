@@ -17,6 +17,10 @@ quiet, color means something. Tokens live in `src/index.css`.
 `0.78rem` fine print/labels · `0.875rem` body-small · `1rem` body · `1.15rem` section titles ·
 `1.4rem` view titles. Numeric table cells get `font-variant-numeric: tabular-nums`.
 
+Line breaks are set globally: headings use `text-wrap: balance` and paragraphs `text-wrap: pretty`,
+so a wrapped title splits evenly and a paragraph does not end on a lone word. The centered landing
+tagline is balanced too.
+
 ## Spacing
 
 Multiples of `0.25rem`. Cards pad `1rem`; gaps between sections `1.25rem`; grid gaps `0.75rem`.
