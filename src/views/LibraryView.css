@@ -158,6 +158,26 @@
   border-color: var(--accent);
 }
 
+/* Faint at rest so a box on every system card does not compete with the
+   system names; it comes up with its card on hover or keyboard focus, like the
+   gallery's overlay buttons. Screens without hover keep it at full strength. */
+@media (hover: hover) {
+  .library-view__card-edit {
+    opacity: 0.45;
+    transition:
+      opacity 0.15s ease,
+      background 0.15s ease,
+      border-color 0.15s ease,
+      color 0.15s ease,
+      transform 0.05s ease;
+  }
+
+  .library-view__grid > li:hover .library-view__card-edit,
+  .library-view__grid > li:focus-within .library-view__card-edit {
+    opacity: 1;
+  }
+}
+
 /* empty state: quiet — no border, just dim centered text */
 
 .library-view__empty {
