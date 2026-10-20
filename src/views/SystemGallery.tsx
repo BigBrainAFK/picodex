@@ -21,6 +21,7 @@ import {
 import type { RomKind } from '../lib/loaderlists';
 import { COVERS, getDir, readFile, type LibraryFile } from '../lib/sdcard';
 import type { System } from '../lib/systems';
+import { IconPencil } from '../components/icons';
 import { useSd } from '../state/SdContext';
 import { useT } from '../i18n';
 import { errorText } from '../i18n/errors';
@@ -526,7 +527,7 @@ export function SystemGallery({ system, onBack }: { system: System; onBack: () =
                       if (cover !== undefined) setPicking({ game, code: cover.code });
                     }}
                   >
-                    <span aria-hidden="true">🖉</span>
+                    <IconPencil className="system-gallery__edit-icon" />
                   </button>
                   {gameData !== null && (
                     <button

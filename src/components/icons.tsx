@@ -118,6 +118,16 @@ export function IconLayers(props: IconProps) {
   );
 }
 
+/** Edit: a pencil, drawn here because many system fonts have no glyph for U+1F589. */
+export function IconPencil(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <path d="M15.5 4.5l4 4L9 19l-5 1 1-5z" />
+      <path d="M13.5 6.5l4 4" />
+    </Icon>
+  );
+}
+
 /** Favorites: a heart. */
 export function IconHeart(props: IconProps) {
   return (

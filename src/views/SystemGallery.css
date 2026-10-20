@@ -361,6 +361,11 @@
   transition: opacity 0.15s ease;
 }
 
+.system-gallery__edit-icon {
+  width: 1.05em;
+  height: 1.05em;
+}
+
 .system-gallery__card:hover .system-gallery__edit,
 .system-gallery__card:focus-within .system-gallery__edit {
   opacity: 0.7;

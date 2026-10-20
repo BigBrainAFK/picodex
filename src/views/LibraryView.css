@@ -158,6 +158,13 @@
   border-color: var(--accent);
 }
 
+/* sits on the text baseline so the button keeps its line-height box */
+.library-view__card-edit-icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.125em;
+}
+
 /* Faint at rest so a box on every system card does not compete with the
    system names; it comes up with its card on hover or keyboard focus, like the
    gallery's overlay buttons. Screens without hover keep it at full strength. */

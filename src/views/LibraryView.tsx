@@ -8,7 +8,7 @@ import type { System } from '../lib/systems';
 import { systemsSharingGamesDir } from '../lib/systems';
 import { useSd, type CoverIndex } from '../state/SdContext';
 import { useT } from '../i18n';
-import { IconCartridge, IconClock, IconHeart, IconLayers } from '../components/icons';
+import { IconCartridge, IconClock, IconHeart, IconLayers, IconPencil } from '../components/icons';
 import { SystemGallery } from './SystemGallery';
 import './LibraryView.css';
 
@@ -283,7 +283,7 @@ export function LibraryView() {
                   setBannerTarget({ gamesDir: system.gamesDir, label: system.label });
                 }}
               >
-                <span aria-hidden="true">🖉</span>
+                <IconPencil className="library-view__card-edit-icon" />
               </button>
             </li>
           ))}
