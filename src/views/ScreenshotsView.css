@@ -90,7 +90,7 @@
   /* 256 wide by (192 + 6 + 192) tall: the two screens and the hinge between */
   aspect-ratio: 256 / 390;
   object-fit: contain;
-  background: #0b0d13;
+  background: var(--well);
   border: 1px solid var(--border);
   border-radius: calc(var(--radius) / 2);
   image-rendering: pixelated;

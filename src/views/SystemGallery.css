@@ -222,7 +222,7 @@
   line-height: 1;
   padding: 0.2rem 0.5rem;
   border-radius: 999px;
-  background: rgb(10 12 16 / 0.78);
+  background: var(--over-art);
   backdrop-filter: blur(2px);
 }
 
@@ -245,7 +245,7 @@
   line-height: 1;
   border: 0;
   border-radius: 6px;
-  background: rgb(10 12 16 / 0.78);
+  background: var(--over-art);
   backdrop-filter: blur(2px);
   color: var(--text-dim);
   opacity: 0.45;
@@ -353,7 +353,7 @@
   line-height: 1;
   border: 0;
   border-radius: 6px;
-  background: rgb(10 12 16 / 0.78);
+  background: var(--over-art);
   backdrop-filter: blur(2px);
   color: var(--text-dim);
   opacity: 0;
@@ -404,7 +404,7 @@
   line-height: 1;
   border: 0;
   border-radius: 6px;
-  background: rgb(10 12 16 / 0.78);
+  background: var(--over-art);
   backdrop-filter: blur(2px);
   color: var(--text-dim);
   opacity: 0;

@@ -166,7 +166,7 @@
   border: 1px solid var(--border);
   border-radius: calc(var(--radius) / 2);
   image-rendering: pixelated;
-  background: #000;
+  background: var(--well);
 }
 
 .covers-view__preview--empty {

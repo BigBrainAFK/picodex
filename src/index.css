@@ -18,6 +18,20 @@
   --ok: #4fc07a;
   --ok-soft: #4fc07a22;
   --warn: #e0a84b;
+  --warn-soft: #e0a84b22;
+  /* white text on --accent-fill */
+  --on-accent: #fff;
+  /* scrims behind dialogs (the image viewer's is darker) */
+  --overlay: rgb(0 0 0 / 0.55);
+  --overlay-strong: rgb(0 0 0 / 0.72);
+  /* the dark ground behind box art and DS captures, a screen in a frame */
+  --well: #0b0d13;
+  /* the pill behind buttons and badges drawn over box art */
+  --over-art: rgb(10 12 16 / 0.78);
+  /* the two faint glows at the top of the page, and selected text */
+  --glow-accent: #e04b6210;
+  --glow-cool: #4b62e00d;
+  --selection: #e04b6220;
 
   --radius: 10px;
   --shadow-card: 0 1px 2px rgb(0 0 0 / 0.35);
@@ -44,8 +58,8 @@ body {
   min-height: 100vh;
   color: var(--text);
   background:
-    radial-gradient(60rem 30rem at 85% -10%, #e04b6210, transparent 60%),
-    radial-gradient(50rem 26rem at -10% 0%, #4b62e00d, transparent 60%), var(--bg);
+    radial-gradient(60rem 30rem at 85% -10%, var(--glow-accent), transparent 60%),
+    radial-gradient(50rem 26rem at -10% 0%, var(--glow-cool), transparent 60%), var(--bg);
   background-attachment: fixed;
 }
 
@@ -56,7 +70,7 @@ body {
 }
 
 ::selection {
-  background: var(--accent-soft);
+  background: var(--selection);
 }
 
 h1,
@@ -109,7 +123,7 @@ button:disabled {
 button.primary {
   background: var(--accent-fill);
   border-color: var(--accent-fill);
-  color: #fff;
+  color: var(--on-accent);
   font-weight: 600;
 }
 

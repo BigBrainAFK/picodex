@@ -8,7 +8,7 @@
   align-items: center;
   justify-content: center;
   padding: 1.25rem;
-  background: rgb(0 0 0 / 0.55);
+  background: var(--overlay);
   backdrop-filter: blur(3px);
 }
 
@@ -89,7 +89,7 @@
   align-items: center;
   justify-content: center;
   height: 250px;
-  background: #0b0d13;
+  background: var(--well);
   border: 1px solid var(--border-strong);
   border-radius: 8px;
 }
@@ -141,7 +141,7 @@
   font-weight: 600;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: #fff;
+  color: var(--on-accent);
   background: var(--accent-fill);
   border-radius: 999px;
 }
@@ -355,7 +355,7 @@
   width: 100%;
   aspect-ratio: 1;
   object-fit: contain;
-  background: #000;
+  background: var(--well);
   border-radius: calc(var(--radius) / 2);
 }
 

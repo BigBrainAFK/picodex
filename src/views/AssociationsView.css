@@ -92,7 +92,7 @@
 .associations-view__row-actions button:hover:not(:disabled) {
   background: var(--accent-fill);
   border-color: var(--accent-fill);
-  color: #fff;
+  color: var(--on-accent);
 }
 
 /* --- add form --- */

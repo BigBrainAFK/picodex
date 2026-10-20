@@ -123,7 +123,7 @@
 .health-view__danger:hover:not(:disabled) {
   background: var(--accent-fill);
   border-color: var(--accent-fill);
-  color: #fff;
+  color: var(--on-accent);
 }
 
 .health-view__confirm {

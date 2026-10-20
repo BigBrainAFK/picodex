@@ -14,6 +14,11 @@ quiet, color means something. Tokens live in `src/index.css`.
   focus rings. Text in the accent uses `--accent-text`, and a solid accent fill behind white text
   (primary and destructive buttons, pills) uses `--accent-fill`; both keep AA contrast (4.5:1).
   Large brand type (the wordmark) stays on `--accent`.
+- Grounds and scrims: `--well` (the dark ground behind box art and DS captures), `--over-art` (the
+  pill behind buttons drawn over box art), `--overlay` / `--overlay-strong` (dialog scrims),
+  `--on-accent` (text on `--accent-fill`), `--warn-soft`, the page glows `--glow-accent` /
+  `--glow-cool`, and `--selection`. Component CSS names a token for every color; the literal values
+  live in `src/index.css` only.
 - Shape and depth: `--radius` (10px), `--shadow-card`, `--shadow-modal`.
 
 ## Type scale
@@ -48,7 +53,7 @@ Multiples of `0.25rem`. Cards pad `1rem`; gaps between sections `1.25rem`; grid 
 - Native controls: checkboxes, radios and ranges take the accent from the global `accent-color`
   on `:root`; the file input's own button is styled like a button through `::file-selector-button`.
   Do not restyle them per view.
-- Modals — overlay `rgb(0 0 0 / 0.55)` + `backdrop-filter: blur(3px)`; dialog is the card
+- Modals: overlay `var(--overlay)` + `backdrop-filter: blur(3px)`; dialog is the card
   pattern plus `--shadow-modal`; header row with title and an X close button.
 
 ## Motion

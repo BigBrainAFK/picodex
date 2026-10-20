@@ -8,7 +8,7 @@
   align-items: center;
   justify-content: center;
   padding: 1.25rem;
-  background: rgb(0 0 0 / 0.72);
+  background: var(--overlay-strong);
   backdrop-filter: blur(3px);
 }
 
@@ -70,7 +70,7 @@
   max-width: 100%;
   aspect-ratio: 256 / 390;
   object-fit: contain;
-  background: #0b0d13;
+  background: var(--well);
   border: 1px solid var(--border);
   border-radius: calc(var(--radius) / 2);
   image-rendering: pixelated;
@@ -142,7 +142,7 @@
 
 .shot-viewer__save {
   padding: 0.4rem 0.9rem;
-  color: #fff;
+  color: var(--on-accent);
   font-weight: 600;
   background: var(--accent-fill);
   border: 1px solid var(--accent-fill);
