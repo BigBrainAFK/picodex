@@ -10,6 +10,10 @@ quiet, color means something. Tokens live in `src/index.css`.
 - Text: `--text` (body), `--text-strong` (rare emphasis, e.g. key numbers), `--text-dim` (secondary).
 - Status: `--ok` / `--ok-soft` (good), `--warn` (caution), `--accent` / `--accent-soft`
   (brand + destructive). No other colors, ever.
+- The accent comes in three strengths of one hue. `--accent` is for marks, borders, bars, icons and
+  focus rings. Text in the accent uses `--accent-text`, and a solid accent fill behind white text
+  (primary and destructive buttons, pills) uses `--accent-fill`; both keep AA contrast (4.5:1).
+  Large brand type (the wordmark) stays on `--accent`.
 - Shape and depth: `--radius` (10px), `--shadow-card`, `--shadow-modal`.
 
 ## Type scale
@@ -33,14 +37,14 @@ Multiples of `0.25rem`. Cards pad `1rem`; gaps between sections `1.25rem`; grid 
   Add `.card--interactive` only when clickable: hover swaps to `--bg-hover` / `--border-strong`.
   Non-interactive cards get **no** hover state.
 - Chips/badges — the `library-view__chip` pattern: 999px radius, `--accent-soft` background,
-  `--accent` text, 0.75rem, weight 600.
+  `--accent-text` text, 0.75rem, weight 600.
 - Empty/info states — centered, `padding: 2.5rem 1rem`, `--text-dim`, optionally a 1.5rem
   emoji/mark line above. No borders; keep them quiet.
 - Tables — header row 0.78rem uppercase dim; body rows `border-top: 1px solid var(--border)`;
   row hover `--bg-hover` (tables sit on card surfaces, where `--bg-raised` would be
   invisible); cell padding `0.5rem 0.75rem`.
 - Buttons — base styles are global. Destructive: transparent background, 1px `--accent` border,
-  `--accent` text; go solid only on hover.
+  `--accent-text` text; go solid `--accent-fill` only on hover.
 - Native controls: checkboxes, radios and ranges take the accent from the global `accent-color`
   on `:root`; the file input's own button is styled like a button through `::file-selector-button`.
   Do not restyle them per view.

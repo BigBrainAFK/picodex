@@ -84,7 +84,7 @@
 
 .system-gallery__filter--fav-on,
 .system-gallery__filter--fav-on:hover:not(:disabled) {
-  color: var(--accent);
+  color: var(--accent-text);
   border-color: var(--accent);
   background: var(--accent-soft);
 }

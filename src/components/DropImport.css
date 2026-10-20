@@ -132,5 +132,5 @@
 }
 
 .drop-import__row--error .drop-import__status {
-  color: var(--accent);
+  color: var(--accent-text);
 }

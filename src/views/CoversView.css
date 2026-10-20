@@ -210,5 +210,5 @@
 }
 
 .covers-view__job--error .covers-view__job-status {
-  color: var(--accent);
+  color: var(--accent-text);
 }

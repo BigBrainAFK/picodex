@@ -142,7 +142,7 @@
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: #fff;
-  background: var(--accent);
+  background: var(--accent-fill);
   border-radius: 999px;
 }
 

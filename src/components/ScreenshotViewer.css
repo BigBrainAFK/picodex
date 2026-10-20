@@ -144,15 +144,16 @@
   padding: 0.4rem 0.9rem;
   color: #fff;
   font-weight: 600;
-  background: var(--accent);
-  border: 1px solid var(--accent);
+  background: var(--accent-fill);
+  border: 1px solid var(--accent-fill);
   border-radius: var(--radius);
   text-decoration: none;
   font-size: 0.9rem;
 }
 
+/* deepens rather than lightens, like button.primary, to keep the white label legible */
 .shot-viewer__save:hover {
-  filter: brightness(1.08);
+  filter: brightness(0.92);
 }
 
 @media (max-width: 30rem) {

@@ -92,7 +92,7 @@
 
 .changelog__version {
   font-weight: 600;
-  color: var(--accent);
+  color: var(--accent-text);
   font-variant-numeric: tabular-nums;
 }
 

@@ -8,7 +8,12 @@
   --text: #e8eaf0;
   --text-strong: #f4f5f9;
   --text-dim: #99a0b4;
-  --accent: #e04b62; /* dspico raspberry */
+  --accent: #e04b62; /* dspico raspberry: marks, borders, bars, focus rings */
+  /* the same raspberry tuned for legibility (WCAG AA, 4.5:1): a lighter one for
+     text on surfaces (5.3:1 on --bg-raised) and a deeper one behind white text
+     (4.6:1), since #e04b62 gives 4.4:1 and 3.9:1 there */
+  --accent-text: #e6647a;
+  --accent-fill: #d03f56;
   --accent-soft: #e04b6220;
   --ok: #4fc07a;
   --ok-soft: #4fc07a22;
@@ -70,7 +75,7 @@ p {
 }
 
 a {
-  color: var(--accent);
+  color: var(--accent-text);
 }
 
 button {
@@ -102,15 +107,16 @@ button:disabled {
 }
 
 button.primary {
-  background: var(--accent);
-  border-color: var(--accent);
+  background: var(--accent-fill);
+  border-color: var(--accent-fill);
   color: #fff;
   font-weight: 600;
 }
 
+/* hover deepens the fill: lightening it would take the white label under 4.5:1 */
 button.primary:hover:not(:disabled) {
-  filter: brightness(1.08);
-  background: var(--accent);
+  filter: brightness(0.92);
+  background: var(--accent-fill);
 }
 
 :focus-visible {

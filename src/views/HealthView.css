@@ -63,7 +63,7 @@
 }
 
 .health-view__error {
-  color: var(--accent);
+  color: var(--accent-text);
 }
 
 .health-view__list {
@@ -117,12 +117,12 @@
 .health-view__danger {
   background: transparent;
   border-color: var(--accent);
-  color: var(--accent);
+  color: var(--accent-text);
 }
 
 .health-view__danger:hover:not(:disabled) {
-  background: var(--accent);
-  border-color: var(--accent);
+  background: var(--accent-fill);
+  border-color: var(--accent-fill);
   color: #fff;
 }
 
