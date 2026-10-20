@@ -21,6 +21,23 @@ quiet, color means something. Tokens live in `src/index.css`.
   live in `src/index.css` only.
 - Shape and depth: `--radius` (10px), `--shadow-card`, `--shadow-modal`.
 
+## Themes
+
+Dark is the default and the identity; a light theme is one click away in the footer. Both are the
+same tokens: `:root` holds the dark values and `:root[data-theme='light']` overrides them.
+
+- Every color token has a value in both themes, or is the same in both on purpose: `--well`,
+  `--on-accent` and the brand `--accent`.
+- Box art and DS captures sit on `--well` in both themes. What is drawn over art or inside a DS
+  screen keeps the dark tokens: a gallery cover that has art (its frame, overlay buttons and stats
+  pill), the cover picker's two screens and failed-capture notices, plus the logo mark. They are
+  listed next to `:root` in `src/index.css`, and text in them sets its own `color: var(--text)`
+  instead of inheriting it. An empty cover slot follows the theme, with a light `--over-art` pill.
+- Light status colors are deeper (`--ok`, `--warn`, `--accent-text`, `--accent-fill`) so they read
+  as text at 4.5:1 on the page, cards and hover fills.
+- Views do not branch on the theme; the list in `src/index.css` is the only place that knows
+  which elements stay dark.
+
 ## Type scale
 
 `0.78rem` fine print/labels · `0.875rem` body-small · `1rem` body · `1.15rem` section titles ·

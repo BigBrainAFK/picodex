@@ -1,4 +1,18 @@
-:root {
+/* Theme tokens. Dark is the default theme. Light applies when <html> carries
+   data-theme="light" (set before first paint by the script in index.html, from
+   the footer switch). The elements listed after :root are drawn over box art,
+   inside a DS screen or as the logo mark, so they keep the dark values in both
+   themes. */
+:root,
+:root[data-theme='light']
+  :is(
+    .app__mark,
+    .drop-import__overlay-mark,
+    .system-gallery__cover-wrap:has(> img),
+    .cover-picker__panel,
+    .screenshots-view__shot--failed,
+    .shot-viewer__failed
+  ) {
   /* palette */
   --bg: #101218;
   --bg-raised: #181b24;
@@ -33,12 +47,51 @@
   --glow-cool: #4b62e00d;
   --selection: #e04b6220;
 
-  --radius: 10px;
   --shadow-card: 0 1px 2px rgb(0 0 0 / 0.35);
   --shadow-modal: 0 12px 40px rgb(0 0 0 / 0.5);
-  --font: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
 
   color-scheme: dark;
+}
+
+/* Light theme: the same roles on a light ground. Status colors are deeper so
+   they still read as text (WCAG AA, 4.5:1 on page, card and hover fills); the
+   brand --accent stays for marks, icons, bars and focus rings. --on-accent
+   and --well keep their dark-theme values. */
+:root[data-theme='light'] {
+  --bg: #f4f5f8;
+  --bg-raised: #ffffff;
+  --bg-hover: #e9ebf1;
+  --border: #dde0e8;
+  --border-strong: #c3c8d4;
+  --text: #1c1f28;
+  --text-strong: #0f1118;
+  --text-dim: #5c6376;
+  --accent-text: #c4253f;
+  --accent-fill: #c4253f;
+  --accent-soft: #e04b6218;
+  --ok: #1b7040;
+  --ok-soft: #1b704018;
+  --warn: #8c5c04;
+  --warn-soft: #8c5c0418;
+  --overlay: rgb(16 18 24 / 0.32);
+  --overlay-strong: rgb(16 18 24 / 0.5);
+  /* over an empty cover slot there is no art to stand out from, so the
+     gallery's toggles sit on a light pill; over box art the cover keeps the
+     dark one (see the list above) */
+  --over-art: rgb(255 255 255 / 0.85);
+  --glow-accent: #e04b620a;
+  --glow-cool: #4b62e008;
+  --selection: #e04b6240;
+  --shadow-card: 0 1px 2px rgb(16 18 24 / 0.06);
+  --shadow-modal: 0 12px 40px rgb(16 18 24 / 0.18);
+
+  color-scheme: light;
+}
+
+:root {
+  --radius: 10px;
+  --font: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+
   /* native checkboxes, radios and range inputs in the brand color instead of
      the browser's blue; inherited, so one declaration covers the whole app */
   accent-color: var(--accent);
@@ -182,6 +235,12 @@ input:disabled::file-selector-button {
   opacity: 0.5;
 }
 
+/* the clear button of search fields: neutral instead of the browser's blue,
+   which the light color scheme would otherwise draw */
+input[type='search']::-webkit-search-cancel-button {
+  filter: grayscale(1);
+}
+
 code {
   background: var(--bg-raised);
   border: 1px solid var(--border);
@@ -243,6 +302,14 @@ code {
   background: var(--border-strong);
   border-radius: 5px;
   border: 2px solid var(--bg);
+}
+
+/* on light cards a page-colored ring would show around the thumb; a
+   transparent inset looks the same over the page and over cards */
+:root[data-theme='light']::-webkit-scrollbar-thumb,
+:root[data-theme='light'] ::-webkit-scrollbar-thumb {
+  border-color: transparent;
+  background-clip: padding-box;
 }
 
 ::-webkit-scrollbar-track {

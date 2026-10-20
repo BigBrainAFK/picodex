@@ -224,6 +224,10 @@
   border-radius: 999px;
   background: var(--over-art);
   backdrop-filter: blur(2px);
+  /* set, not inherited: over box art the cover keeps dark-theme tokens in the
+     light theme (see index.css), and an inherited color would come from the
+     light card */
+  color: var(--text);
 }
 
 /* favorite heart: a button on the cover overlay (rendered only when the
@@ -307,7 +311,6 @@
 .system-gallery__badges--button {
   border: 0;
   cursor: pointer;
-  color: inherit;
   font-family: inherit;
   transition: opacity 0.15s ease;
 }

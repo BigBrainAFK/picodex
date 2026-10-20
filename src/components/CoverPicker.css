@@ -92,6 +92,9 @@
   background: var(--well);
   border: 1px solid var(--border-strong);
   border-radius: 8px;
+  /* the screens keep dark-theme tokens in the light theme (see index.css), so
+     their text color is set here instead of inherited from the dialog */
+  color: var(--text);
 }
 
 /* the launcher's visible 106x96 cover area at 2x */
