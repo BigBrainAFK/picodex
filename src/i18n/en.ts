@@ -32,6 +32,10 @@ export const en = {
     whatsNew: "What's new",
     footerLicense: 'Open source (MIT) · no tracking',
     language: 'Language',
+    /** Label and tooltip of the repository card in the header. */
+    repoCard: (slug: string) => `${slug} on GitHub`,
+    repoCardStats: (slug: string, stars: string, forks: string) =>
+      `${slug} on GitHub. Stars: ${stars}. Forks: ${forks}.`,
     themeDark: 'Dark',
     themeLight: 'Light',
     themeSystem: 'System',

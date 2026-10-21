@@ -8,7 +8,11 @@
   padding: 0 1.25rem;
 }
 
+/* wordmark on the left, repository card on the right */
 .app__header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
   padding: 1.1rem 0 0.75rem;
 }
 

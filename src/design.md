@@ -69,6 +69,9 @@ Multiples of `0.25rem`. Cards pad `1rem`; gaps between sections `1.25rem`; grid 
   invisible); cell padding `0.5rem 0.75rem`.
 - Buttons — base styles are global. Destructive: transparent background, 1px `--accent` border,
   `--accent-text` text; go solid `--accent-fill` only on hover.
+- Header: the wordmark on the left once a card is open, the repository card on the right on every
+  screen. Its star and fork counts are read when the app is built (`src/lib/repo.ts`); the visitor's
+  browser does not ask GitHub for them.
 - Native controls: checkboxes, radios and ranges take the accent from the global `accent-color`
   on `:root`; the file input's own button is styled like a button through `::file-selector-button`.
   Do not restyle them per view.

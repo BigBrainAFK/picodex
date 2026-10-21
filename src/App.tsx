@@ -14,6 +14,7 @@ import { ScreenshotsView } from './views/ScreenshotsView';
 import { HealthView } from './views/HealthView';
 import { DropImport } from './components/DropImport';
 import { Changelog } from './components/Changelog';
+import { RepoCard } from './components/RepoCard';
 import {
   IconChart,
   IconFolder,
@@ -305,16 +306,13 @@ function Shell() {
   const [showChangelog, setShowChangelog] = useState(false);
   return (
     <div className="app">
-      {root ? (
-        <>
-          <header className="app__header">
-            <Wordmark />
-          </header>
-          <Workspace />
-        </>
-      ) : (
-        <Welcome onWhatsNew={() => setShowChangelog(true)} />
-      )}
+      {/* the landing page has its own big title, so the header carries the
+          wordmark only once a card is open; the repository card is on both */}
+      <header className="app__header">
+        {root && <Wordmark />}
+        <RepoCard />
+      </header>
+      {root ? <Workspace /> : <Welcome onWhatsNew={() => setShowChangelog(true)} />}
       {/* three groups, each kept on one line; on narrow screens each group takes
           its own line and the separators between groups hide (see App.css) */}
       <footer className="app__footer">

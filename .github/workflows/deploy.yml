@@ -28,6 +28,8 @@ jobs:
         env:
           # project pages are served from /<repo>/
           VITE_BASE: /picodex/
+          # vite.config.ts reads the header card's star and fork counts with it
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist

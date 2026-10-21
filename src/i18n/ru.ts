@@ -20,6 +20,9 @@ export const ru = {
     whatsNew: 'Что нового',
     footerLicense: 'Лицензия MIT · без телеметрии',
     language: 'Язык',
+    repoCard: (slug: string) => `${slug} на GitHub`,
+    repoCardStats: (slug: string, stars: string, forks: string) =>
+      `${slug} на GitHub. Звёзды: ${stars}. Форки: ${forks}.`,
     themeDark: 'Тёмная',
     themeLight: 'Светлая',
     themeSystem: 'Системная',

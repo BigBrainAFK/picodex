@@ -22,6 +22,9 @@ export const es: Dict = {
     whatsNew: 'Novedades',
     footerLicense: 'Código abierto (MIT) · sin rastreo',
     language: 'Idioma',
+    repoCard: (slug: string) => `${slug} en GitHub`,
+    repoCardStats: (slug: string, stars: string, forks: string) =>
+      `${slug} en GitHub. Estrellas: ${stars}. Forks: ${forks}.`,
     themeDark: 'Oscuro',
     themeLight: 'Claro',
     themeSystem: 'Sistema',

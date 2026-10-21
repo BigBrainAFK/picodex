@@ -26,7 +26,7 @@ export interface ChangelogEntry {
 }
 
 /** Repository base URL for issue and release links. */
-export const REPO_URL = 'https://github.com/rasalopa/picodex';
+export { REPO_URL } from './repo';
 
 /**
  * Curated highlights, newest first. Single source of truth for the in-app
