@@ -3,6 +3,10 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
+  # a daily rebuild refreshes the star and fork counts on the header card, which
+  # vite.config.ts reads at build time; 06:17 UTC is 00:17 in Mexico City
+  schedule:
+    - cron: '17 6 * * *'
   workflow_dispatch:
 
 permissions:
