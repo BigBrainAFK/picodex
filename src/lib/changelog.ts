@@ -35,6 +35,42 @@ export { REPO_URL } from './repo';
  */
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: '0.11.0',
+    date: '2026-10-25',
+    changes: [
+      {
+        text: {
+          en: "A light theme. The button next to the language in the footer moves between dark, light and system, which follows your computer's setting. Dark stays the default, and PicoDex remembers your pick.",
+          es: 'Tema claro. El botón junto al idioma, en el pie de página, pasa entre oscuro, claro y sistema, que sigue el ajuste de tu equipo. El oscuro sigue siendo el predeterminado, y PicoDex recuerda lo que elijas.',
+        },
+      },
+      {
+        text: {
+          en: 'A faint pattern of consoles, cartridges and game motifs sits behind every screen. It fades where the text is, and goes away when your system asks for more contrast.',
+          es: 'Un patrón tenue de consolas, cartuchos y motivos de videojuegos va detrás de cada pantalla. Se atenúa donde está el texto y desaparece cuando tu sistema pide más contraste.',
+        },
+      },
+      {
+        text: {
+          en: 'A link in the top right corner goes to PicoDex on GitHub and shows its stars and forks. The numbers are read when the site is published, so opening PicoDex does not contact GitHub for them.',
+          es: 'Arriba a la derecha hay un enlace a PicoDex en GitHub con sus estrellas y forks. Las cifras se leen al publicar el sitio, así que abrir PicoDex no consulta a GitHub para mostrarlas.',
+        },
+      },
+      {
+        text: {
+          en: 'Raspberry text and the white labels on raspberry buttons are easier to read. Every tab starts at the same edge, so the content no longer jumps when you switch.',
+          es: 'El texto en frambuesa y las etiquetas blancas de los botones frambuesa se leen mejor. Todas las pestañas empiezan en el mismo borde, así que el contenido ya no salta al cambiar.',
+        },
+      },
+      {
+        text: {
+          en: 'Marking a favorite in the gallery no longer dims every heart while it saves, and the edit buttons show a pencil on macOS, where they showed a striped box.',
+          es: 'Marcar un favorito en la galería ya no atenúa todos los corazones mientras se guarda, y los botones de editar muestran un lápiz en macOS, donde salía un cuadro rayado.',
+        },
+      },
+    ],
+  },
+  {
     version: '0.10.3',
     date: '2026-09-28',
     changes: [

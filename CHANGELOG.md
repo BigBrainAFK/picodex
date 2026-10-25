@@ -5,6 +5,33 @@ reader's language, sourced from [`src/lib/changelog.ts`](src/lib/changelog.ts) â
 a counterpart there. The [Releases](https://github.com/rasalopa/picodex/releases) carry the full
 notes for each version.
 
+## 0.11.0 (2026-10-25)
+
+PicoDex has a light theme now, and a pattern of consoles behind every screen.
+
+- **A light theme, and a button for it.** The button next to the language in the footer moves
+  between dark, light and system, which follows your computer's setting and changes with it. Dark
+  stays the default, and PicoDex remembers your pick. Box art and screenshots keep a dark
+  background in both themes.
+- **Consoles behind the page.** A faint pattern of handhelds, pads, cartridges and game motifs,
+  drawn for PicoDex, sits behind every screen. It fades in the middle of the window, where the
+  text is, and goes away when your system asks for more contrast.
+- **PicoDex on GitHub, with its stars and forks.** A link in the top right corner goes to the code
+  and shows both numbers. They are read when the site is published, so opening PicoDex does not
+  contact GitHub for them.
+- **Raspberry text is easier to read.** Links, the active tab, error messages and the white labels
+  on raspberry buttons now reach the 4.5:1 contrast that WCAG asks of reading text. The color
+  moved only slightly.
+- **Marking a favorite no longer dims the gallery.** While the card saved the change, every heart
+  and check in the grid faded out and back. Now the others stay as they are.
+- **The edit buttons show a pencil on macOS.** They used a character that many system fonts lack,
+  so they showed a striped box. They draw their own icon now.
+- **Tabs line up, and a few details are tidier.** Every tab starts at the same edge, so the content
+  no longer jumps when you switch, and the gallery fits two columns on a phone. Checkboxes on the
+  Covers tab are raspberry instead of the browser's blue, the Reload button is a slim pill like the
+  tabs, the banner edit button on each system card stays faint until you point at the card, and
+  long titles break into lines of even length.
+
 ## 0.10.3 â€” 2026-09-28
 
 Ready for the launcher you actually have.
