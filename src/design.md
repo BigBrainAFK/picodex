@@ -40,6 +40,16 @@ holds the dark values and `:root[data-theme='light']` overrides them.
 - Views do not branch on the theme; the list in `src/index.css` is the only place that knows
   which elements stay dark.
 
+## Background pattern
+
+Behind the page sits a pattern of console and game glyphs drawn for PicoDex, without logos:
+handhelds, pads, cartridges, an SD card and a few game motifs. `src/lib/pattern.ts` holds the
+glyphs and lays out the tile, and `npm run pattern` writes it to `src/assets/console-pattern.svg`
+(a test fails while the two disagree). `body::before` paints it in `--text-dim` at
+`--pattern-opacity` through a mask, faded in the middle of the window. It does not move, and it is
+hidden when the system asks for more contrast. New glyphs follow the 24-unit line style of the
+others and carry no meaning; the pattern is texture only.
+
 ## Type scale
 
 `0.78rem` fine print/labels · `0.875rem` body-small · `1rem` body · `1.15rem` section titles ·
