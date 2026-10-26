@@ -23,12 +23,17 @@ You will need a Chromium-based browser and, ideally, a DSpico SD card (a folder 
 
 ## Translations
 
-PicoDex ships in English and Spanish, and more languages are welcome, **including a partial one.**
-Every key is optional and anything you leave out reads in English, so thirty strings translated is a
-real contribution, not a draft.
+PicoDex ships in English, Spanish and Russian, and more languages are welcome, **including a
+partial one.** Every key is optional and anything you leave out reads in English, so thirty strings
+translated is a real contribution, not a draft.
 
 **You do not need a DSpico or an SD card for this**, whatever the section above says. A browser is
 enough: the language switch works on the landing page.
+
+**You do not need npm either.** Copy [`src/i18n/en.ts`](src/i18n/en.ts), translate the text inside
+the quotes and leave anything inside `${…}` as it is, then send the file as a pull request from
+GitHub's web editor or attached to an issue. The wiring and the tests can be done on this side. The
+steps below are for checking your language in the app yourself.
 
 ### Adding a language
 
@@ -70,8 +75,8 @@ enough: the language switch works on the landing page.
 4. Your language now appears in the footer. Click it. Everything you have translated is in your
    language and everything else is in English. That is working correctly, not a bug.
 
-5. Copy keys over from [`src/i18n/en.ts`](src/i18n/en.ts) as you go: 370 entries in 15 groups, about
-   515 lines, and it is the list of everything there is to say.
+5. Copy keys over from [`src/i18n/en.ts`](src/i18n/en.ts) as you go: about 450 entries in 17 groups,
+   some 670 lines, and it is the list of everything there is to say.
    [`src/i18n/es.ts`](src/i18n/es.ts) is worth reading for how the awkward ones were handled.
 
 6. `npm test` and `npm run format` before opening the PR. A commit like
@@ -95,7 +100,7 @@ enough: the language switch works on the landing page.
   Translating it is optional and English is the fallback there too, so untranslated release notes in
   your language are expected, not missing.
 - **Open an issue first.** Two people translating the same language into two different dictionaries
-  is the one outcome nobody wants, and 515 lines is too much work to duplicate.
+  is the one outcome nobody wants, and 670 lines is too much work to duplicate.
 - **The best moment to translate is right after a release.** Between them the interface moves:
   strings get reworded, added, or dropped when a screen is redesigned, and anything you translated
   for a screen that changed is work thrown away. When a version ships I post the exact list of new
