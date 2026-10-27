@@ -32,11 +32,14 @@
 
 /** Per-game persisted data, keyed by ROM file name. */
 export interface GameDataEntry {
-  /** ROM file name (JSON object key). Matched case-insensitively. */
+  /**
+   * ROM file name (JSON object key), the entry's identity. Matched ignoring
+   * the case of A-Z only, see {@link sameFileName}.
+   */
   fileName: string;
   /**
    * Internal game code from the NDS/GBA header, undefined when unknown.
-   * Lookups prefer it: it survives renames and moves.
+   * Kept as information only: no lookup goes by it, see {@link findEntry}.
    */
   gameCode?: string;
   /** Marked as favorite (X button in the launcher). */
@@ -98,11 +101,11 @@ export interface GameDataTotals {
 }
 
 /**
- * Whether a game code can serve as a stable identity (and is safe inside the
+ * Whether a game code is worth storing on an entry (and is safe inside the
  * JSON file). Homebrew headers can hold garbage where retail games keep their
- * code, so only non-empty printable-ASCII codes are usable — and `####`, the
- * toolchain placeholder every homebrew without its own code carries, is not
- * an identity either (matching by it would make them all share one entry).
+ * code, so only non-empty printable-ASCII codes are usable, and `####`, the
+ * toolchain placeholder every homebrew without its own code carries, says
+ * nothing about the game either.
  * Mirrors the launcher's `JsonGameDataService::isUsableGameCode`. NOTE: this
  * is a different rule from {@link import('./rom').isUsableGameCode}, which
  * governs ROM-header extraction and deliberately keeps `####` — do not
@@ -221,41 +224,63 @@ export function serializeGameData(data: GameData): string {
 }
 
 /**
- * Finds the entry for a game, mirroring the launcher's `GetEntry`: the game
- * code is tried first (case-insensitive) because it is the stable identity
- * that survives file renames; the file name (case-insensitive) is the
- * fallback. Unusable codes (empty or non-printable, see
- * {@link isUsableGameCode}) skip straight to the name lookup.
+ * Compares two file names the way the launcher's `strcasecmp` does: A-Z match
+ * their lowercase letters and every other character must be identical, so
+ * "Pokémon.nds" and "POKéMON.NDS" are the same file but "POKÉMON.NDS" is not.
  */
-export function findEntry(
-  data: GameData,
-  fileName: string,
-  gameCode?: string,
-): GameDataEntry | undefined {
-  if (isUsableGameCode(gameCode)) {
-    const code = gameCode.toLowerCase();
-    const byCode = data.entries.find(
-      (entry) => entry.gameCode !== undefined && entry.gameCode.toLowerCase() === code,
-    );
-    if (byCode !== undefined) return byCode;
+export function sameFileName(a: string, b: string): boolean {
+  if (a.length !== b.length) return false;
+  for (let i = 0; i < a.length; i++) {
+    let x = a.charCodeAt(i);
+    let y = b.charCodeAt(i);
+    if (x >= 0x41 && x <= 0x5a) x += 0x20;
+    if (y >= 0x41 && y <= 0x5a) y += 0x20;
+    if (x !== y) return false;
   }
-  const name = fileName.toLowerCase();
-  return data.entries.find((entry) => entry.fileName.toLowerCase() === name);
+  return true;
+}
+
+/**
+ * Finds the entry for a game by file name only, mirroring the launcher's
+ * `GetEntry`. The game code plays no part: a game and its hack share one, and
+ * the launcher (since v1.5.0) keeps their marks and play time apart by name.
+ * A rom renamed on the PC finds nothing here, the same as on the console.
+ */
+export function findEntry(data: GameData, fileName: string): GameDataEntry | undefined {
+  return data.entries.find((entry) => sameFileName(entry.fileName, fileName));
 }
 
 /** User-editable boolean marks on a game entry. */
 export type GameFlag = 'favorite' | 'completed';
 
 /**
+ * Resolves the entry a change goes to, mirroring the launcher's
+ * `GetOrCreateEntry`: the one with that file name ({@link findEntry}), or a
+ * fresh all-default entry appended for it. A usable code
+ * ({@link isUsableGameCode}) is written onto the entry in both cases, as the
+ * latest reading of the file's header; it never picks the entry. Works on a
+ * copy of the entries and returns it with the index of the entry to change.
+ */
+function getOrCreateEntry(
+  data: GameData,
+  fileName: string,
+  gameCode: string | null | undefined,
+): { entries: GameDataEntry[]; index: number } {
+  const entries = [...data.entries];
+  let index = entries.findIndex((entry) => sameFileName(entry.fileName, fileName));
+  if (index < 0) {
+    entries.push({ fileName, favorite: false, completed: false, launchCount: 0, playMinutes: 0 });
+    index = entries.length - 1;
+  }
+  const code = gameCode ?? undefined;
+  if (isUsableGameCode(code)) entries[index] = { ...entries[index], gameCode: code };
+  return { entries, index };
+}
+
+/**
  * Toggles one of a game's boolean flags, mirroring the launcher's
- * `ToggleFavorite`/`ToggleCompleted` (X press / X long-press). The entry is
- * resolved like the launcher's `GetOrCreateEntry`: code-first
- * (case-insensitive, usable codes only — see {@link isUsableGameCode}) with
- * the file name healed to the given one on a code match (the code is the
- * stable identity, the file may have been renamed since the entry was
- * written); then by file name (case-insensitive), adopting the code when the
- * entry lacks one (upgrading a legacy name-keyed entry); else a fresh entry
- * with just that flag set is appended.
+ * `ToggleFavorite`/`ToggleCompleted` (X press / X long-press) on the entry
+ * {@link getOrCreateEntry} resolves by file name.
  *
  * Returns a new {@link GameData} — the input is never mutated; the session
  * and all unaffected entries are carried over untouched. An entry toggled
@@ -269,77 +294,10 @@ export function toggleFlag(
   gameCode: string | null | undefined,
   flag: GameFlag,
 ): GameData {
-  const code = gameCode ?? undefined;
-  const usable = isUsableGameCode(code);
-  const entries = [...data.entries];
-
-  if (usable) {
-    const lowerCode = code.toLowerCase();
-    const index = entries.findIndex(
-      (entry) => entry.gameCode !== undefined && entry.gameCode.toLowerCase() === lowerCode,
-    );
-    const found = index >= 0 ? entries[index] : undefined;
-    if (found !== undefined) {
-      // self-heal the file name: the code survives renames, the name may not
-      let healed: GameDataEntry = { ...found, fileName };
-      healed[flag] = !found[flag];
-      // healing may rename onto a fileName owned by a code-less duplicate
-      // (e.g. a toggle recorded before this game's code was known). Both the
-      // launcher and serializeGameData collapse duplicate names
-      // last-writer-wins, which would destroy this entry's history — merge
-      // the duplicate into the surviving entry instead.
-      const lowerName = fileName.toLowerCase();
-      const duplicateIndex = entries.findIndex(
-        (entry, i) =>
-          i !== index && entry.gameCode === undefined && entry.fileName.toLowerCase() === lowerName,
-      );
-      if (duplicateIndex >= 0) {
-        const duplicate = entries[duplicateIndex];
-        healed = {
-          ...healed,
-          launchCount: healed.launchCount + duplicate.launchCount,
-          playMinutes: healed.playMinutes + duplicate.playMinutes,
-          lastPlayed:
-            healed.lastPlayed !== undefined &&
-            (duplicate.lastPlayed === undefined || duplicate.lastPlayed <= healed.lastPlayed)
-              ? healed.lastPlayed
-              : duplicate.lastPlayed,
-        };
-        // a flag set only on the swallowed duplicate must survive the merge.
-        // The flag being toggled is exempt: the UI showed (and the user acted
-        // on) the code entry's state, so its just-flipped value wins — OR-ing
-        // it too would undo an intentional un-toggle.
-        const untoggled: GameFlag = flag === 'favorite' ? 'completed' : 'favorite';
-        healed[untoggled] = healed[untoggled] || duplicate[untoggled];
-        entries.splice(duplicateIndex, 1);
-      }
-      const healedIndex = entries.indexOf(found);
-      entries[healedIndex] = healed;
-      return { ...data, entries };
-    }
-  }
-
-  const lowerName = fileName.toLowerCase();
-  const index = entries.findIndex((entry) => entry.fileName.toLowerCase() === lowerName);
-  const found = index >= 0 ? entries[index] : undefined;
-  if (found !== undefined) {
-    const next: GameDataEntry = { ...found };
-    next[flag] = !found[flag];
-    if (usable && next.gameCode === undefined) next.gameCode = code;
-    entries[index] = next;
-    return { ...data, entries };
-  }
-
-  const created: GameDataEntry = {
-    fileName,
-    favorite: false,
-    completed: false,
-    launchCount: 0,
-    playMinutes: 0,
-  };
-  created[flag] = true;
-  if (usable) created.gameCode = code;
-  entries.push(created);
+  const { entries, index } = getOrCreateEntry(data, fileName, gameCode);
+  const next: GameDataEntry = { ...entries[index] };
+  next[flag] = !next[flag];
+  entries[index] = next;
   return { ...data, entries };
 }
 
@@ -370,10 +328,9 @@ export interface GameStats {
 /**
  * Overwrites a game's launch count and play time with explicit values, for
  * manual correction (e.g. time played on hardware before tracking existed).
- * The entry is resolved exactly like {@link toggleFlag} — code-first with
- * name healing and code-less-duplicate merge, then by name, else created —
- * but the counts are SET rather than toggled, and flags / lastPlayed / path /
- * gameCode are preserved on the returned entry. Negative, fractional or
+ * The entry is resolved like {@link toggleFlag}'s, by file name through
+ * {@link getOrCreateEntry}, but the counts are SET rather than toggled, and
+ * flags, lastPlayed and path are kept on the returned entry. Negative, fractional or
  * non-finite inputs are clamped to non-negative integers. Returns a new
  * {@link GameData}; the input is never mutated. Setting both counts to 0
  * makes the entry default-valued, so — unless a flag (favorite/completed)
@@ -389,67 +346,12 @@ export function setGameStats(
   stats: GameStats,
 ): GameData {
   const clampCount = (n: number) => (Number.isFinite(n) ? Math.max(0, Math.trunc(n)) : 0);
-  const launchCount = clampCount(stats.launchCount);
-  const playMinutes = clampCount(stats.playMinutes);
-  const code = gameCode ?? undefined;
-  const usable = isUsableGameCode(code);
-  const entries = [...data.entries];
-
-  if (usable) {
-    const lowerCode = code.toLowerCase();
-    const index = entries.findIndex(
-      (entry) => entry.gameCode !== undefined && entry.gameCode.toLowerCase() === lowerCode,
-    );
-    const found = index >= 0 ? entries[index] : undefined;
-    if (found !== undefined) {
-      let healed: GameDataEntry = { ...found, fileName, launchCount, playMinutes };
-      // same code-less-duplicate merge as toggleFlag: the counts are being
-      // overwritten anyway, so only the swallowed entry's flags and newer
-      // lastPlayed need to survive
-      const lowerName = fileName.toLowerCase();
-      const duplicateIndex = entries.findIndex(
-        (entry, i) =>
-          i !== index && entry.gameCode === undefined && entry.fileName.toLowerCase() === lowerName,
-      );
-      if (duplicateIndex >= 0) {
-        const duplicate = entries[duplicateIndex];
-        healed = {
-          ...healed,
-          favorite: healed.favorite || duplicate.favorite,
-          completed: healed.completed || duplicate.completed,
-          lastPlayed:
-            healed.lastPlayed !== undefined &&
-            (duplicate.lastPlayed === undefined || duplicate.lastPlayed <= healed.lastPlayed)
-              ? healed.lastPlayed
-              : duplicate.lastPlayed,
-        };
-        entries.splice(duplicateIndex, 1);
-      }
-      const healedIndex = entries.indexOf(found);
-      entries[healedIndex] = healed;
-      return { ...data, entries };
-    }
-  }
-
-  const lowerName = fileName.toLowerCase();
-  const index = entries.findIndex((entry) => entry.fileName.toLowerCase() === lowerName);
-  const found = index >= 0 ? entries[index] : undefined;
-  if (found !== undefined) {
-    const next: GameDataEntry = { ...found, launchCount, playMinutes };
-    if (usable && next.gameCode === undefined) next.gameCode = code;
-    entries[index] = next;
-    return { ...data, entries };
-  }
-
-  const created: GameDataEntry = {
-    fileName,
-    favorite: false,
-    completed: false,
-    launchCount,
-    playMinutes,
+  const { entries, index } = getOrCreateEntry(data, fileName, gameCode);
+  entries[index] = {
+    ...entries[index],
+    launchCount: clampCount(stats.launchCount),
+    playMinutes: clampCount(stats.playMinutes),
   };
-  if (usable) created.gameCode = code;
-  entries.push(created);
   return { ...data, entries };
 }
 

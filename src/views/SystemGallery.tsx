@@ -340,16 +340,11 @@ export function SystemGallery({ system, onBack }: { system: System; onBack: () =
   const cards = useMemo<Card[]>(() => {
     const list = systemGames.map((game) => {
       const cover = resolved.get(gameKey(game));
-      const entry =
-        gameData === null
-          ? undefined
-          : findEntry(gameData, game.fileName, cover?.code ?? undefined);
+      const entry = gameData === null ? undefined : findEntry(gameData, game.fileName);
       // favorites-first is decided on the mount-time snapshot, not the live
       // entry above — see the initialGameData doc for why
       const frozen =
-        initialGameData === null
-          ? undefined
-          : findEntry(initialGameData, game.fileName, cover?.code ?? undefined);
+        initialGameData === null ? undefined : findEntry(initialGameData, game.fileName);
       return { card: { game, cover, entry }, favoriteRank: frozen?.favorite === true ? 0 : 1 };
     });
     list.sort(
@@ -546,9 +541,8 @@ export function SystemGallery({ system, onBack }: { system: System; onBack: () =
                             ? t.gallery.removeFavorite
                             : t.gallery.markFavorite
                       }
-                      // disabled until the cover/gamecode resolves: a
-                      // name-only toggle on a renamed rom would split its
-                      // gamedata entry in two
+                      // disabled until the cover/gamecode resolves, so the
+                      // entry the toggle creates carries the game code too
                       disabled={togglePending || cover === undefined}
                       onClick={() => {
                         handleToggle(toggleFavorite, game, cover);
@@ -574,8 +568,7 @@ export function SystemGallery({ system, onBack }: { system: System; onBack: () =
                             ? t.gallery.unmarkCompleted
                             : t.gallery.markCompleted
                       }
-                      // same gate as the heart: a name-only toggle on a
-                      // renamed rom would split its gamedata entry in two
+                      // same gate as the heart
                       disabled={togglePending || cover === undefined}
                       onClick={() => {
                         handleToggle(toggleCompleted, game, cover);
@@ -590,8 +583,7 @@ export function SystemGallery({ system, onBack }: { system: System; onBack: () =
                       className="system-gallery__badges system-gallery__badges--button"
                       aria-label={t.gallery.editStats(title)}
                       title={cover === undefined ? t.gallery.resolving : t.gallery.correctStats}
-                      // same gate as the heart: the gamecode must resolve
-                      // before we can key the write to the right entry
+                      // same gate as the heart
                       disabled={cover === undefined}
                       onClick={() => {
                         if (cover === undefined) return;

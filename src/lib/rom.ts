@@ -2,9 +2,9 @@
  * ROM header parsing: extraction of the 4-character game code that retail
  * NDS and GBA cartridges carry in their headers.
  *
- * The game code is the stable identity the launcher uses to key covers,
- * icons and per-game data (`_pico/covers/nds/<CODE>.bmp`, gamedata entries,
- * ...). Homebrew ROMs often hold garbage (or zeros) at that spot, so the
+ * The game code is the stable identity the launcher uses to key covers and
+ * icons (`_pico/covers/nds/<CODE>.bmp`, ...); gamedata entries go by file
+ * name instead. Homebrew ROMs often hold garbage (or zeros) at that spot, so the
  * parsers return `null` unless all four characters are printable ASCII —
  * mirroring `isUsableGameCode` in the launcher's JsonGameDataService.
  */

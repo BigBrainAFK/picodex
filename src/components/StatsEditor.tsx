@@ -6,7 +6,7 @@ import './StatsEditor.css';
 
 export interface StatsEditorProps {
   game: LibraryFile;
-  /** Resolved gamecode, or null — keyed the same way the badges/toggles are. */
+  /** Resolved gamecode, or null; stored on the entry, which is found by file name. */
   gameCode: string | null;
   launchCount: number;
   playMinutes: number;
